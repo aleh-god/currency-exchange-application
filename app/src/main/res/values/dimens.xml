@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="super_margin">48dp</dimen>
+    <dimen name="ultra_margin">24dp</dimen>
+    <dimen name="big_margin">16dp</dimen>
+    <dimen name="medium_margin">8dp</dimen>
+    <dimen name="small_margin">4dp</dimen>
+    <dimen name="mini_margin">2dp</dimen>
+    <dimen name="micro_margin">1dp</dimen>
+
+    <dimen name="super_padding">48dp</dimen>
+    <dimen name="ultra_padding">24dp</dimen>
+    <dimen name="big_padding">16dp</dimen>
+    <dimen name="medium_padding">8dp</dimen>
+    <dimen name="small_padding">4dp</dimen>
+    <dimen name="mini_padding">2dp</dimen>
+    <dimen name="micro_padding">1dp</dimen>
+
+    <dimen name="rule_min_item_height">56dp</dimen>
+    <dimen name="rule_main_image_view_size">50dp</dimen>
+</resources>
