@@ -6,6 +6,7 @@ import by.godevelopment.currencyexchangeapplication.R
 
 const val TAG = "#currencyapp"
 const val TASK_INTERVAL = 5000L
+const val BASE_URL = "https://us-central1-epam-laba-13-1527598553135.cloudfunctions.net/myWebsiteBackend/api/"
 
 object CurrencyBases {
 
