@@ -16,7 +16,9 @@ class CurrencyRepositoryImpl @Inject constructor(
         .fetchLatestRates()
         .map { list ->
             list
-                .filter { it.base != null && it.rate != null }
-                .map { it.toCurrencyModel() }
+                .filter { it.base != null || it.rate != null }
+                .mapIndexed { index, currencyEntity ->
+                    currencyEntity.toCurrencyModel(index)
+                }
         }
 }

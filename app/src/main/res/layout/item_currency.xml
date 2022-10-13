@@ -61,7 +61,7 @@
         style="@style/Widget.CurrencyExchangeApplication.EditTextRate"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textAlignment="textEnd"
-        tools:text="1234512345,1234512345"
+        tools:text="1234567890,12345"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

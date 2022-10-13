@@ -4,11 +4,11 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
 data class CurrencyModel(
-    var rate : Double,
-    var base : String,
+    val id: Int,
+    val rate : Double,
+    val base : String,
     @StringRes
     val currencyName: Int,
     @DrawableRes
-    val currencyDraw: Int,
-    val isTop: Boolean = false
+    val currencyDraw: Int
 )
