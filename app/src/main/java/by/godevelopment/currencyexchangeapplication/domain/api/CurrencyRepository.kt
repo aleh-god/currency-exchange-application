@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrencyRepository {
 
-    suspend fun fetchLatestRates(): Flow<List<CurrencyModel>>
+    fun fetchLatestRates(): Flow<List<CurrencyModel>>
 }
