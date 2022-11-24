@@ -1,6 +1,9 @@
 package by.godevelopment.currencyexchangeapplication.data.repositories
 
-import by.godevelopment.currencyexchangeapplication.data.datasources.CurrencyDataSource
+import by.godevelopment.currencyexchangeapplication.R
+import by.godevelopment.currencyexchangeapplication.commons.DOUBLE_ZERO_STUB
+import by.godevelopment.currencyexchangeapplication.commons.STRING_ZERO_STUB
+import by.godevelopment.currencyexchangeapplication.data.interfaces.CurrencyDataSource
 import by.godevelopment.currencyexchangeapplication.data.utils.toCurrencyModel
 import by.godevelopment.currencyexchangeapplication.domain.api.CurrencyRepository
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
@@ -12,13 +15,18 @@ class CurrencyRepositoryImpl @Inject constructor(
     private val currencyDataSource: CurrencyDataSource
 ) : CurrencyRepository {
 
-    override suspend fun fetchLatestRates(): Flow<List<CurrencyModel>> = currencyDataSource
+    override fun fetchLatestRates(): Flow<List<CurrencyModel>> = currencyDataSource
         .fetchLatestRates()
         .map { list ->
             list
-                .filter { it.base != null || it.rate != null }
                 .mapIndexed { index, currencyEntity ->
                     currencyEntity.toCurrencyModel(index)
+                }
+                .filter {
+                    it.base != STRING_ZERO_STUB
+                            && it.rate != DOUBLE_ZERO_STUB
+                            && it.currencyName != R.string.message_error_data_load
+                            && it.currencyDraw != R.drawable.ic_launcher_background
                 }
         }
 }
