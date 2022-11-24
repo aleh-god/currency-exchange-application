@@ -1,8 +1,6 @@
 package by.godevelopment.currencyexchangeapplication.domain.usecases
 
-import android.util.Log
 import by.godevelopment.currencyexchangeapplication.commons.DOUBLE_ZERO_STUB
-import by.godevelopment.currencyexchangeapplication.commons.TAG
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
 import javax.inject.Inject
 
@@ -12,7 +10,7 @@ class LockTopListItemUseCase  @Inject constructor() {
         return if (list.isNotEmpty()) {
             val first = list[0]
             val remainder = list.drop(1)
-            val result = listOf(
+            listOf(
                 CurrencyModel(
                     id = first.id,
                     base = first.base,
@@ -22,8 +20,6 @@ class LockTopListItemUseCase  @Inject constructor() {
                     currencyName = first.currencyName
                 )
             ) + remainder
-            Log.i(TAG, "lockTopListItemUseCase \n list = $list \n result = $result")
-            result
         }
         else list
     }
