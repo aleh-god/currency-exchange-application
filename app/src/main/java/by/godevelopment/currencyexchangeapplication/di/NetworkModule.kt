@@ -1,7 +1,5 @@
 package by.godevelopment.currencyexchangeapplication.di
 
-import by.godevelopment.currencyexchangeapplication.commons.BASE_URL
-import by.godevelopment.currencyexchangeapplication.commons.TASK_INTERVAL
 import by.godevelopment.currencyexchangeapplication.data.remoteapi.CurrencyApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -15,6 +13,9 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
+
+    private val BASE_URL = "https://us-central1-epam-laba-13-1527598553135.cloudfunctions.net/myWebsiteBackend/api/"
+    private val TASK_INTERVAL = 5000L
 
     @Provides
     fun provideBaseUrl(): String = BASE_URL
