@@ -1,5 +1,7 @@
 package by.godevelopment.currencyexchangeapplication.di
 
+import by.godevelopment.currencyexchangeapplication.data.datasources.CurrencyDataSourceImpl
+import by.godevelopment.currencyexchangeapplication.data.interfaces.CurrencyDataSource
 import by.godevelopment.currencyexchangeapplication.data.repositories.CurrencyRepositoryImpl
 import by.godevelopment.currencyexchangeapplication.domain.api.CurrencyRepository
 import dagger.Binds
@@ -13,4 +15,10 @@ interface AppBindModule {
     fun bindCurrencyRepositoryImpl_to_CurrencyRepository(
         currencyRepositoryImpl: CurrencyRepositoryImpl
     ): CurrencyRepository
+
+    @Suppress("FunctionName")
+    @Binds
+    fun bindCurrencyDataSourceImpl_to_CurrencyDataSource(
+        currencyDataSourceImpl: CurrencyDataSourceImpl
+    ): CurrencyDataSource
 }
