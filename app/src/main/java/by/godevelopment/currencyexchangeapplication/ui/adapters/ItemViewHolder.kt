@@ -1,9 +1,7 @@
 package by.godevelopment.currencyexchangeapplication.ui.adapters
 
-import android.util.Log
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
-import by.godevelopment.currencyexchangeapplication.commons.TAG
 import by.godevelopment.currencyexchangeapplication.databinding.ItemCurrencyBinding
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
 
@@ -20,26 +18,27 @@ class ItemViewHolder(
         with(binding) {
             root.setOnClickListener {
                 baseForMoveToTop?.let { base -> onClickItem(base) }
+                rate.setSelection(0)
             }
             rate.doAfterTextChanged {
                 if (isTopChosenItem) {
                     onTextChange(it.toString())
-                    Log.i(TAG, "rate.doAfterTextChanged: $it")
+//                    Log.i(TAG, "rate.doAfterTextChanged: $it")
                 }
             }
         }
     }
 
     fun bind(item: CurrencyModel, isTopChosenItemCheck: Boolean) {
-        Log.i(TAG, "onBindViewHolder item.base = ${item.base} isTopChosenItemCheck = $isTopChosenItemCheck")
+//        Log.i(TAG, "onBindViewHolder item.base = ${item.base} isTopChosenItemCheck = $isTopChosenItemCheck")
         with(binding) {
             base.text = item.base
             baseForMoveToTop = item.base
             name.text = root.resources.getString(item.currencyName)
             image.setImageResource(item.currencyDraw)
-            rate.setText(String.format("%.5f", item.rate))
-
+            rate.setText(item.rate.toString())
             isTopChosenItem = isTopChosenItemCheck
+            rate.isEnabled = isTopChosenItemCheck
         }
     }
 }

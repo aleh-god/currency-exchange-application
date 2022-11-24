@@ -1,15 +1,14 @@
 package by.godevelopment.currencyexchangeapplication.ui.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import by.godevelopment.currencyexchangeapplication.R
-import by.godevelopment.currencyexchangeapplication.commons.TAG
 import by.godevelopment.currencyexchangeapplication.domain.api.CurrencyRepository
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
 import by.godevelopment.currencyexchangeapplication.domain.usecases.LockTopListItemUseCase
 import by.godevelopment.currencyexchangeapplication.domain.usecases.MoveItemToTopListByBaseUseCase
+import by.godevelopment.currencyexchangeapplication.domain.usecases.RateValueRoundUseCase
 import by.godevelopment.currencyexchangeapplication.domain.usecases.RecalculatedUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -21,7 +20,8 @@ class MainViewModel (
     private val currencyRepository: CurrencyRepository,
     private val recalculatedUseCase: RecalculatedUseCase,
     private val lockTopListItemUseCase: LockTopListItemUseCase,
-    private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase
+    private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase,
+    private val rateValueRoundUseCase: RateValueRoundUseCase
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())
@@ -36,7 +36,6 @@ class MainViewModel (
     private var fetchJob: Job? = null
 
     init {
-        Log.i(TAG, "MainViewModel: init")
         fetchDataList()
     }
 
@@ -45,27 +44,28 @@ class MainViewModel (
         fetchJob = viewModelScope.launch {
             currencyRepository.fetchLatestRates()
                 .onStart { _uiState.update { it.copy(isFetchingData = true) } }
-                .catch { exception ->
-                    Log.i(TAG, "viewModelScope.catch ${exception.message}")
+                .catch { _ ->
                     _uiState.update { it.copy(isFetchingData = false) }
                     _uiEvent.send(R.string.message_error_data_load)
                 }
                 .combine(topPositionCurrencyBaseState) { list, topPositionCurrencyBase ->
-                    _uiState.update { it.copy(topHasFocus = (topPositionCurrencyBase != null)) }
-                    moveItemToTopListByBaseUseCase(list, topPositionCurrencyBase)
+                    topPositionCurrencyBase?.let {
+                        _uiState.update { it.copy(topHasFocus = true) }
+                        moveItemToTopListByBaseUseCase(list, topPositionCurrencyBase)
+                    } ?: list
                 }
                 .combine(topPositionCurrencyRateState) { list, topPositionCurrencyValue ->
-                    val result = if(topPositionCurrencyValue != null) recalculatedUseCase(list, topPositionCurrencyValue)
-                    else list
-                    Log.i(TAG, "fetchDataList: onTextChange rate = $topPositionCurrencyValue \n list = $list \n result = $result")
-                    result
+                    topPositionCurrencyValue?.let {
+                        recalculatedUseCase(list, topPositionCurrencyValue)
+                    } ?: list
                 }
                 .combine(topPositionCurrencyBaseState) { list, topPositionCurrencyBase ->
-                    if (topPositionCurrencyBase != null) lockTopListItemUseCase(list)
-                    else list
+                    topPositionCurrencyBase?.let { lockTopListItemUseCase(list) } ?: list
                 }
-                .catch { exception ->
-                    Log.i(TAG, "viewModelScope.catch ${exception.message}")
+                .map { list ->
+                    list.map { it.copy(rate = rateValueRoundUseCase(it.rate)) }
+                }
+                .catch { _ ->
                     _uiState.update { it.copy(isFetchingData = false) }
                     _uiEvent.send(R.string.message_error_data_calculated)
                 }
@@ -97,7 +97,8 @@ class MainViewModel (
         private val currencyRepository: CurrencyRepository,
         private val recalculatedUseCase: RecalculatedUseCase,
         private val lockTopListItemUseCase: LockTopListItemUseCase,
-        private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase
+        private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase,
+        private val rateValueRoundUseCase: RateValueRoundUseCase
     ) : ViewModelProvider.Factory {
 
         @Suppress("UNCHECKED_CAST")
@@ -106,7 +107,8 @@ class MainViewModel (
                 currencyRepository,
                 recalculatedUseCase,
                 lockTopListItemUseCase,
-                moveItemToTopListByBaseUseCase
+                moveItemToTopListByBaseUseCase,
+                rateValueRoundUseCase
             ) as T
         }
     }

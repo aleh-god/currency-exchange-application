@@ -2,7 +2,6 @@ package by.godevelopment.currencyexchangeapplication.ui.main
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
 import by.godevelopment.currencyexchangeapplication.R
 import by.godevelopment.currencyexchangeapplication.appComponent
-import by.godevelopment.currencyexchangeapplication.commons.TAG
 import by.godevelopment.currencyexchangeapplication.databinding.FragmentMainBinding
 import by.godevelopment.currencyexchangeapplication.ui.adapters.CurrencyAdapter
 import com.google.android.material.snackbar.Snackbar
@@ -63,7 +60,7 @@ class MainFragment : Fragment() {
             viewModel.uiState
                 .flowWithLifecycle(lifecycle)
                 .onEach { uiState ->
-                    Log.i(TAG, "lifecycle.coroutineScope.topHasFocus: ${uiState.topHasFocus}")
+//                    Log.i(TAG, "lifecycle.coroutineScope.topHasFocus: ${uiState.topHasFocus}")
                     if (!uiState.isFetchingData) progressBar.visibility = View.GONE
                     else progressBar.visibility = View.VISIBLE
                     adapter.submitList(uiState.dataList)

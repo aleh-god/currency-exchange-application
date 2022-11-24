@@ -59,6 +59,7 @@
         app:layout_constraintStart_toEndOf="@id/name"
         app:layout_constraintWidth_max="@dimen/rule_edit_text_weight"
         style="@style/Widget.CurrencyExchangeApplication.EditTextRate"
+        android:textColor="@drawable/edit_text_selector"
         android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
         android:textAlignment="textEnd"
         tools:text="1234567890,12345"
