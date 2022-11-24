@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import by.godevelopment.currencyexchangeapplication.commons.TAG
 import by.godevelopment.currencyexchangeapplication.databinding.ItemCurrencyBinding
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
-import kotlin.math.log
 
 class CurrencyAdapter(
     private val onClickItem: (String) -> Unit,

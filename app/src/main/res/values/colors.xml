@@ -19,4 +19,7 @@
     <color name="brandNatureDark">#006250</color>
     <color name="primaryText">#ffffff</color>
     <color name="secondaryText">#000000</color>
+
+    <color name="enabled_color">#1f0e00</color>
+    <color name="disabled_color">#000000</color>
 </resources>
