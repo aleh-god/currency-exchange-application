@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import by.godevelopment.currencyexchangeapplication.R
 import by.godevelopment.currencyexchangeapplication.domain.api.CurrencyRepository
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
-import by.godevelopment.currencyexchangeapplication.domain.usecases.LockTopListItemUseCase
 import by.godevelopment.currencyexchangeapplication.domain.usecases.MoveItemToTopListByBaseUseCase
 import by.godevelopment.currencyexchangeapplication.domain.usecases.RateValueRoundUseCase
 import by.godevelopment.currencyexchangeapplication.domain.usecases.RecalculatedUseCase
@@ -19,7 +18,6 @@ import javax.inject.Inject
 class MainViewModel (
     private val currencyRepository: CurrencyRepository,
     private val recalculatedUseCase: RecalculatedUseCase,
-    private val lockTopListItemUseCase: LockTopListItemUseCase,
     private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase,
     private val rateValueRoundUseCase: RateValueRoundUseCase
 ) : ViewModel() {
@@ -59,9 +57,6 @@ class MainViewModel (
                         recalculatedUseCase(list, topPositionCurrencyValue)
                     } ?: list
                 }
-                .combine(topPositionCurrencyBaseState) { list, topPositionCurrencyBase ->
-                    topPositionCurrencyBase?.let { lockTopListItemUseCase(list) } ?: list
-                }
                 .map { list ->
                     list.map { it.copy(rate = rateValueRoundUseCase(it.rate)) }
                 }
@@ -96,7 +91,6 @@ class MainViewModel (
     class Factory @Inject constructor(
         private val currencyRepository: CurrencyRepository,
         private val recalculatedUseCase: RecalculatedUseCase,
-        private val lockTopListItemUseCase: LockTopListItemUseCase,
         private val moveItemToTopListByBaseUseCase: MoveItemToTopListByBaseUseCase,
         private val rateValueRoundUseCase: RateValueRoundUseCase
     ) : ViewModelProvider.Factory {
@@ -106,7 +100,6 @@ class MainViewModel (
             return MainViewModel(
                 currencyRepository,
                 recalculatedUseCase,
-                lockTopListItemUseCase,
                 moveItemToTopListByBaseUseCase,
                 rateValueRoundUseCase
             ) as T
