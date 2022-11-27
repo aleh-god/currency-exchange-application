@@ -60,7 +60,6 @@ class MainFragment : Fragment() {
             viewModel.uiState
                 .flowWithLifecycle(lifecycle)
                 .onEach { uiState ->
-//                    Log.i(TAG, "lifecycle.coroutineScope.topHasFocus: ${uiState.topHasFocus}")
                     if (!uiState.isFetchingData) progressBar.visibility = View.GONE
                     else progressBar.visibility = View.VISIBLE
                     adapter.submitList(uiState.dataList)

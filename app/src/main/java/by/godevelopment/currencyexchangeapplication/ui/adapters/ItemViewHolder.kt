@@ -1,9 +1,11 @@
 package by.godevelopment.currencyexchangeapplication.ui.adapters
 
+import android.os.Bundle
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.RecyclerView
 import by.godevelopment.currencyexchangeapplication.databinding.ItemCurrencyBinding
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
+import by.godevelopment.currencyexchangeapplication.ui.adapters.CurrencyAdapter.Companion.ARG_CURR
 
 class ItemViewHolder(
     private val binding: ItemCurrencyBinding,
@@ -11,34 +13,51 @@ class ItemViewHolder(
     private val onTextChange: (String) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var baseForMoveToTop: String? = null
-    private var isTopChosenItem: Boolean = false
+    private var baseForMoveToTopHolder: String? = null
+    private var isTopChosenItemHolder: Boolean = false
 
     init {
         with(binding) {
             root.setOnClickListener {
-                baseForMoveToTop?.let { base -> onClickItem(base) }
-                rate.setSelection(0)
+                baseForMoveToTopHolder?.let { base -> onClickItem(base) }
+                rate.isEnabled = true
+                isTopChosenItemHolder = true
             }
             rate.doAfterTextChanged {
-                if (isTopChosenItem) {
+                if (isTopChosenItemHolder) {
                     onTextChange(it.toString())
-//                    Log.i(TAG, "rate.doAfterTextChanged: $it")
                 }
             }
         }
     }
 
-    fun bind(item: CurrencyModel, isTopChosenItemCheck: Boolean) {
-//        Log.i(TAG, "onBindViewHolder item.base = ${item.base} isTopChosenItemCheck = $isTopChosenItemCheck")
+    fun bind(item: CurrencyModel, isTopChosenItem: Boolean) {
+        isTopChosenItemHolder = isTopChosenItem
+        baseForMoveToTopHolder = item.base
         with(binding) {
             base.text = item.base
-            baseForMoveToTop = item.base
             name.text = root.resources.getString(item.currencyName)
             image.setImageResource(item.currencyDraw)
-            rate.setText(item.rate.toString())
-            isTopChosenItem = isTopChosenItemCheck
-            rate.isEnabled = isTopChosenItemCheck
+            item.rate.toString().also {
+                rate.apply {
+                    setText(it)
+                    isEnabled = isTopChosenItem
+                    if (isTopChosenItem) {
+                        post {
+                            requestFocus()
+                            setSelection(it.length)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun update(bundle: Bundle, isTopChosenItem: Boolean) {
+        isTopChosenItemHolder = isTopChosenItem
+        if (bundle.containsKey(ARG_CURR)) {
+            val rate = bundle.getDouble(ARG_CURR)
+            if (!isTopChosenItemHolder) binding.rate.setText(rate.toString())
         }
     }
 }
