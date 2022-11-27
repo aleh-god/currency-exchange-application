@@ -42,12 +42,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.5.1"
     implementation "com.google.android.material:material:1.7.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    androidTestImplementation project(path: ':app')
-    androidTestImplementation project(path: ':app')
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     def fragment_version = "1.5.4"
@@ -67,12 +65,10 @@ dependencies {
     
     testImplementation "junit:junit:4.13.2"
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     androidTestImplementation "androidx.test.ext:junit:1.1.4"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
-
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
-    testImplementation "app.cash.turbine:turbine:0.12.0"
+    androidTestImplementation project(path: ':app')
 
     def mockkVersion = "1.13.2"
     testImplementation "io.mockk:mockk:${mockkVersion}"

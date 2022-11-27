@@ -3,7 +3,10 @@
     <style name="Widget.CurrencyExchangeApplication" parent="android:Widget"/>
 
     <style name="ThemeOverlay.CurrencyExchangeApplication.Card" parent="">
-        <item name="android:layout_margin">@dimen/small_margin</item>
+        <item name="android:layout_marginTop">@dimen/micro_margin</item>
+        <item name="android:layout_marginBottom">@dimen/micro_margin</item>
+        <item name="android:layout_marginEnd">@dimen/mini_margin</item>
+        <item name="android:layout_marginStart">@dimen/micro_margin</item>
     </style>
 
     <style name="Widget.CurrencyExchangeApplication.ImageView">
