@@ -44,7 +44,7 @@ internal class MainViewModelTest : ViewModelTest() {
         viewModel = MainViewModel(
             currencyRepository = currencyRepository,
             recalculatedUseCase = recalculatedUseCase,
-            lockTopListItemUseCase = lockTopListItemUseCase,
+            // lockTopListItemUseCase = lockTopListItemUseCase,
             moveItemToTopListByBaseUseCase = moveItemToTopListByBaseUseCase,
             rateValueRoundUseCase = rateValueRoundUseCase
         )
