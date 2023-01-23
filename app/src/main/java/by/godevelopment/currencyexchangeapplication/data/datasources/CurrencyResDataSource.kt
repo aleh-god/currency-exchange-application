@@ -1,16 +1,44 @@
-package by.godevelopment.currencyexchangeapplication.commons
+package by.godevelopment.currencyexchangeapplication.data.datasources
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import by.godevelopment.currencyexchangeapplication.R
 
-const val TAG = "#currencyapp"
-const val DOUBLE_ZERO_STUB = 0.0
-const val STRING_ZERO_STUB = ""
+object CurrencyResDataSource {
 
-object CurrencyBases {
-
-    private val base: List<String> = listOf("USD", "EUR", "CHF", "HRK", "MXN", "ZAR", "CNY", "THB", "AUD", "ILS", "KRW", "JPY", "PLN", "GBP", "IDR", "HUF", "PHP", "TRY", "RUB", "HKD", "ISK", "DKK", "CAD", "MYR", "BGN", "NOK", "RON", "SGD", "CZK", "SEK", "NZD", "BRL", "INR").sorted()
+    private val base: List<String> = listOf(
+        "USD",
+        "EUR",
+        "CHF",
+        "HRK",
+        "MXN",
+        "ZAR",
+        "CNY",
+        "THB",
+        "AUD",
+        "ILS",
+        "KRW",
+        "JPY",
+        "PLN",
+        "GBP",
+        "IDR",
+        "HUF",
+        "PHP",
+        "TRY",
+        "RUB",
+        "HKD",
+        "ISK",
+        "DKK",
+        "CAD",
+        "MYR",
+        "BGN",
+        "NOK",
+        "RON",
+        "SGD",
+        "CZK",
+        "SEK",
+        "NZD",
+        "BRL",
+        "INR"
+    ).sorted()
     private val stringRes: List<Int> = listOf(
         R.string.currency_aud_name,
         R.string.currency_bgn_name,
@@ -83,21 +111,25 @@ object CurrencyBases {
         R.drawable.ic_zar_flag
     )
 
-    val map: Map<String, ResModel> = base
+    private val currencyName: Map<String, Int> = base
         .mapIndexed { index, string ->
-            string to ResModel(
-                currencyName = stringRes[index],
-                currencyDraw = drawableRes[index]
-            )
+            string to stringRes[index]
         }
         .associate {
             it.first to it.second
         }
 
-    data class ResModel(
-        @StringRes
-        val currencyName: Int,
-        @DrawableRes
-        val currencyDraw: Int
-    )
+    private val currencyDraw: Map<String, Int> = base
+        .mapIndexed { index, string ->
+            string to drawableRes[index]
+        }
+        .associate {
+            it.first to it.second
+        }
+
+    fun getCurrencyNameOrDefaultBy(base: String?): Int =
+        currencyName[base] ?: R.string.message_error_data_load
+
+    fun getCurrencyDrawOrDefaultBy(base: String?): Int =
+        currencyDraw[base] ?: R.drawable.ic_launcher_background
 }
