@@ -1,9 +1,10 @@
 package by.godevelopment.currencyexchangeapplication.data.interfaces
 
 import by.godevelopment.currencyexchangeapplication.data.models.CurrencyApiModel
-import kotlinx.coroutines.flow.Flow
+import retrofit2.http.GET
 
-interface CurrencyDataSource {
+interface CurrencyApi {
 
-    fun fetchLatestRates(): Flow<List<CurrencyApiModel>>
+    @GET("currency")
+    suspend fun fetchRates(): List<CurrencyApiModel>
 }

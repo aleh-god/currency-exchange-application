@@ -5,13 +5,14 @@ import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
+import java.math.BigDecimal
 
 internal class MoveItemToTopListByBaseUseCaseTest {
 
     private val list = (0..3).map {
         CurrencyModel(
             id = it,
-            rate = it * 1.1,
+            rate = BigDecimal.valueOf(it * 1.1),
             base = "base$it",
             currencyName = R.string.currency_usd_name,
             currencyDraw = R.drawable.ic_usd_flag
