@@ -21,7 +21,9 @@ import javax.inject.Inject
 class MainFragment : Fragment() {
 
     companion object {
+
         const val SCROLL_DELAY = 500L
+
         fun newInstance() = MainFragment()
     }
 
@@ -40,7 +42,6 @@ class MainFragment : Fragment() {
     lateinit var factory: MainViewModel.Factory
     private val viewModel: MainViewModel by viewModels { factory }
 
-
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
         super.onAttach(context)
@@ -51,9 +52,13 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupUi()
         setupEvent()
-        return binding.root
     }
 
     private fun setupUi() = with(binding) {
@@ -88,14 +93,14 @@ class MainFragment : Fragment() {
         viewModel.onClickItem(itemBase)
         with(binding) {
             recyclerView.postDelayed(
-                Runnable { recyclerView.smoothScrollToPosition(0) },
+                { recyclerView.smoothScrollToPosition(0) },
                 SCROLL_DELAY
             )
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         _binding = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

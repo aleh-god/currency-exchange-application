@@ -1,8 +1,10 @@
 package by.godevelopment.currencyexchangeapplication.ui.main
 
 import by.godevelopment.currencyexchangeapplication.R
-import by.godevelopment.currencyexchangeapplication.domain.api.CurrencyRepository
+import by.godevelopment.currencyexchangeapplication.domain.interfaces.CurrencyRepository
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
+import by.godevelopment.currencyexchangeapplication.domain.usecases.FilterCorrectItemsUseCase
+import by.godevelopment.currencyexchangeapplication.domain.usecases.RecalculateCurrencyListUseCase
 import by.godevelopment.currencyexchangeapplication.testutils.ViewModelTest
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import java.math.BigDecimal
 
 internal class MainViewModelTest : ViewModelTest() {
 
@@ -24,29 +27,33 @@ internal class MainViewModelTest : ViewModelTest() {
     private val inputList = listOf(
         CurrencyModel(
             id = 0,
-            rate = 0.10007437479338122,
+            rate = BigDecimal.valueOf(100.0),
             base = "USD",
             currencyName = R.string.currency_usd_name,
             currencyDraw = R.drawable.ic_usd_flag
         ),
         CurrencyModel(
-            id = 0,
-            rate = 0.1,
+            id = 1,
+            rate = BigDecimal.valueOf(120.0),
             base = "EUR",
             currencyName = R.string.currency_eur_name,
             currencyDraw = R.drawable.ic_eur_flag
         )
     )
 
+    private val filterCorrectItemsUseCase = FilterCorrectItemsUseCase()
+    private val recalculateCurrencyListUseCase = RecalculateCurrencyListUseCase(5)
+
     private fun setUp() {
         every { currencyRepository.fetchLatestRates() } returns mockFlow
 
+
         viewModel = MainViewModel(
             currencyRepository = currencyRepository,
-            recalculatedUseCase = recalculatedUseCase,
-            // lockTopListItemUseCase = lockTopListItemUseCase,
+            recalculateCurrencyListUseCase = recalculateCurrencyListUseCase,
             moveItemToTopListByBaseUseCase = moveItemToTopListByBaseUseCase,
-            rateValueRoundUseCase = rateValueRoundUseCase
+            roundRateValueUseCase = roundRateValueUseCase,
+            filterCorrectItemsUseCase = filterCorrectItemsUseCase
         )
     }
 
@@ -56,14 +63,14 @@ internal class MainViewModelTest : ViewModelTest() {
         val expectedList = listOf(
             CurrencyModel(
                 id = 0,
-                rate = 0.0, // recalculatedUseCase is mocked. He does not work.
+                rate = BigDecimal.ZERO, // recalculatedUseCase is mocked. He does not work.
                 base = "USD",
                 currencyName = R.string.currency_usd_name,
                 currencyDraw = R.drawable.ic_usd_flag
             ),
             CurrencyModel(
-                id = 0,
-                rate = 0.0,
+                id = 1,
+                rate = BigDecimal.ZERO, // recalculatedUseCase is mocked. He does not work.
                 base = "EUR",
                 currencyName = R.string.currency_eur_name,
                 currencyDraw = R.drawable.ic_eur_flag

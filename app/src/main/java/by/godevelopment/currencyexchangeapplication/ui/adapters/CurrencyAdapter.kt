@@ -56,7 +56,7 @@ class CurrencyAdapter(
                 }
                 else {
                     Bundle().apply {
-                        putDouble(ARG_CURR, newItem.rate)
+                        putDouble(ARG_CURR, newItem.rate.toDouble())
                     }
                 }
             }
