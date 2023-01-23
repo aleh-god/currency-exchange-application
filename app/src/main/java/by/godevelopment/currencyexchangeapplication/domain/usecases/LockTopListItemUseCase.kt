@@ -1,8 +1,15 @@
 package by.godevelopment.currencyexchangeapplication.domain.usecases
 
-import by.godevelopment.currencyexchangeapplication.commons.DOUBLE_ZERO_STUB
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
+import java.math.BigDecimal
 import javax.inject.Inject
+
+/**
+ Use this code block in viewModel
+                .combine(topPositionCurrencyBaseState) { list, topPositionCurrencyBase ->
+                    topPositionCurrencyBase?.let { lockTopListItemUseCase(list) } ?: list
+                }
+ **/
 
 @Deprecated("The solution has been used before payloads")
 class LockTopListItemUseCase  @Inject constructor() {
@@ -16,7 +23,7 @@ class LockTopListItemUseCase  @Inject constructor() {
                     id = first.id,
                     base = first.base,
                     // Lock DiffUtils in adapter by zero value
-                    rate = DOUBLE_ZERO_STUB,
+                    rate = BigDecimal.ZERO,
                     currencyDraw = first.currencyDraw,
                     currencyName = first.currencyName
                 )
@@ -25,8 +32,3 @@ class LockTopListItemUseCase  @Inject constructor() {
         else list
     }
 }
-
-// Use this code block in viewModel
-//                .combine(topPositionCurrencyBaseState) { list, topPositionCurrencyBase ->
-//                    topPositionCurrencyBase?.let { lockTopListItemUseCase(list) } ?: list
-//                }

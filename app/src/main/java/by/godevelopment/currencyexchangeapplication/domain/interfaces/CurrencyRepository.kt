@@ -1,4 +1,4 @@
-package by.godevelopment.currencyexchangeapplication.domain.api
+package by.godevelopment.currencyexchangeapplication.domain.interfaces
 
 import by.godevelopment.currencyexchangeapplication.domain.models.CurrencyModel
 import kotlinx.coroutines.flow.Flow
