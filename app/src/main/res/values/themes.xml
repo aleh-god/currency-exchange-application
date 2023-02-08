@@ -1,16 +1,21 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Theme.CurrencyExchangeApplication" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.CurrencyExchangeApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/brandBrown</item>
+        <item name="colorPrimaryVariant">@color/brandBrownLight</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/brandNature</item>
+        <item name="colorSecondaryVariant">@color/brandNatureDark</item>
+        <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="colorSurface">@color/brandBeige</item>
+        <item name="colorOnSurface">@color/brandBrownDark</item>
+
+        <item name="colorPrimaryDark">?attr/colorPrimaryVariant</item>
     </style>
 </resources>

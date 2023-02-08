@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.CurrencyExchangeApplication" parent="android:Widget"/>
+
+    <style name="ThemeOverlay.CurrencyExchangeApplication.Card" parent="">
+        <item name="android:layout_marginTop">@dimen/micro_margin</item>
+        <item name="android:layout_marginBottom">@dimen/micro_margin</item>
+        <item name="android:layout_marginEnd">@dimen/mini_margin</item>
+        <item name="android:layout_marginStart">@dimen/micro_margin</item>
+    </style>
+
+    <style name="Widget.CurrencyExchangeApplication.ImageView">
+        <item name="android:layout_width">@dimen/rule_item_image_view_size</item>
+        <item name="android:layout_height">@dimen/rule_item_image_view_size</item>
+        <item name="android:src">@color/ic_launcher_background</item>
+        <item name="android:layout_margin">@dimen/big_margin</item>
+    </style>
+
+    <style name="Widget.CurrencyExchangeApplication.TextBase" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_marginTop">@dimen/mini_margin</item>
+        <item name="android:layout_marginBottom">@dimen/mini_margin</item>
+    </style>
+
+    <style name="Widget.CurrencyExchangeApplication.TextName" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_marginTop">@dimen/mini_margin</item>
+        <item name="android:layout_marginStart">@dimen/big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/small_margin</item>
+    </style>
+
+    <style name="Widget.CurrencyExchangeApplication.EditTextRate" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_marginTop">@dimen/big_margin</item>
+        <item name="android:layout_marginBottom">@dimen/big_margin</item>
+        <item name="android:layout_marginEnd">@dimen/big_margin</item>
+        <item name="android:layout_marginStart">@dimen/small_margin</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+</resources>

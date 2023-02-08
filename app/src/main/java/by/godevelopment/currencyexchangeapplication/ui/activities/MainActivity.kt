@@ -1,7 +1,8 @@
-package by.godevelopment.currencyexchangeapplication
+package by.godevelopment.currencyexchangeapplication.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import by.godevelopment.currencyexchangeapplication.R
 import by.godevelopment.currencyexchangeapplication.ui.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
